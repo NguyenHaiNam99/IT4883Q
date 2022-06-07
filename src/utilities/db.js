@@ -12,11 +12,11 @@ const pool = mysql.createPool(config);
 
 pool.getConnection(err => {
     if (err) console.log(err);
-    else console.log('Connected!...');
+    else console.log('Server Connected!...');
 });
 
 const logQuery = (sql, params) => {
-    console.log('sql: ',
+    console.log('\x1b[32m', 'sql: ',
         mysql.format(sql, params)
             .replace(/\r?\n|\r/g, ' ')
             .split(' ').filter(e => e !== '').join(' '));
@@ -25,13 +25,24 @@ const logQuery = (sql, params) => {
 const query = (sql, params) => {
     logQuery(sql, params);
     return new Promise((resolve, reject) => {
-        pool.query(sql, params, (err, results)=>{
+        pool.query(sql, params, (err, results) => {
             if (err) reject(err);
             else return resolve(results);
         })
     })
 }
 
+const queryOne = (sql, params) => {
+    logQuery(sql, params);
+    return new Promise((resolve, reject) => {
+        pool.query(sql, params, (err, results) => {
+            if (err) reject(err);
+            return resolve(results);
+        })
+    })
+};
+
 module.exports = {
-    query
+    query,
+    queryOne
 }
