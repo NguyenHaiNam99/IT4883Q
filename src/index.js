@@ -5,15 +5,16 @@ const PORT = 3001;
 
 app.use(bodyParser.json());
 const account = require('./routers/account');
+const auth = require('./routers/auth');
 
 const checkHealth = (req, res)=> {
-    console.log(req)
     res.send({
         status: 1,
         message: 'Server alive',
     });
 };
 
+app.use('/auth', auth);
 app.use('/account', account);
 app.get('/', checkHealth);
 

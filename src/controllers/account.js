@@ -10,7 +10,7 @@ const create = async (req, res) => {
         name: Name,
         position: Position,
         role: Role,
-        avatar: Avatar
+        avatar: Avatar,
     };
 
     if (!newAccount.username) {
@@ -18,7 +18,7 @@ const create = async (req, res) => {
             status: 0,
             message: 'Không được để trống tài khoản',
         }
-        res.status(200).send(result);
+        res.status(400).send(result);
     }
 
     else if (!newAccount.password || newAccount.password.length < 6) {
@@ -31,10 +31,7 @@ const create = async (req, res) => {
 
     else {
         result = await account.create(newAccount)
-        res.send({
-            status: 1,
-            result
-        })
+        res.status(200).send(result);
     }
 };
 
