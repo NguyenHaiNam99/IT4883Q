@@ -3,7 +3,6 @@ const auth = require('../services/auth');
 const login = async (req, res) => {
     const { username, password } = req.body;
     const result = await auth.login(username, password);
-    console.log(result)
     if (result) {
         return res.status(200).send({
             status: 0,
@@ -16,6 +15,16 @@ const login = async (req, res) => {
     })
 };
 
+const getMe = async (req, res) => {
+    const username = req.username;
+    const data = await auth.getMe(username);
+    return res.status(200).send({
+        status: 0,
+        data
+    })
+}
+
 module.exports = {
     login,
+    getMe,
 }

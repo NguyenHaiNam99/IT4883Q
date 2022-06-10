@@ -9,7 +9,7 @@ const auth = require('./routers/auth');
 
 const checkHealth = (req, res)=> {
     res.send({
-        status: 1,
+        status: 0,
         message: 'Server alive',
     });
 };

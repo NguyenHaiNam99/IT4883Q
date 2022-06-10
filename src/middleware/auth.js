@@ -2,29 +2,37 @@ const security = require('../utilities/security');
 
 const reqLogin = (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = security.verifyToken(token);
-        req.username = decodedToken.username;
-        req.role = decodedToken.role;
-        next();
+        const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+        if (token) {
+            const decodedToken = security.verifyToken(token);
+            req.username = decodedToken.username;
+            req.role = decodedToken.role;
+            next();
+        } else {
+            res.status(403).send({
+                status: 1,
+                message: 'Không có token',
+            })
+        }
     } catch (err) {
         console.log(err);
-        console.log(role);
-        next('Xác thực thất bại!');
+        next({
+            status: 1,
+            message: 'Xác thực thất bại!',
+        });
     }
 };
 
-const reqRole = (role) => {
-    const middleware = async (req, res, next) => {
-        if (req.role === role) next();
-        else {
-            console.log(req.role);
-            console.log(role);
-            next('Không được cấp quyền!');
-        }
+const reqRole = (role) => async (req, res, next) => {
+    if (req.role === role) next();
+    else {
+        res.status(403).send({
+            status: 1,
+            message: 'Không được cấp quyền',
+        })
     }
-    return middleware();
 };
+
 
 module.exports = {
     reqLogin,
