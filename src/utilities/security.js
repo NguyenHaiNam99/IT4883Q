@@ -19,15 +19,17 @@ const confirmPassword = async (password, hashPassword) => {
 const genToken = ({ username, role }) => {
     const token = jwt.sign({ username, role }, JWT_SECRET_KEY,
         {
-            expiresIn: 30*30
+            expiresIn: 30,
         });
     return token;
 };
 
 const verifyToken = (token) => {
-    const data = jwt.verify(token, JWT_SECRET_KEY);
-    return data;
-}
+    return jwt.verify(token, JWT_SECRET_KEY, (err, data)=>{
+        if (err) return {err:"Token hết hạn"};
+        else return data;
+    });
+};
 
 
 module.exports = {

@@ -1,3 +1,4 @@
+const e = require('express');
 const security = require('../utilities/security');
 
 const reqLogin = (req, res, next) => {
@@ -5,9 +6,16 @@ const reqLogin = (req, res, next) => {
         const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
         if (token) {
             const decodedToken = security.verifyToken(token);
-            req.username = decodedToken.username;
-            req.role = decodedToken.role;
-            next();
+            if (decodedToken.err) {
+                res.status(401).send({
+                    status: 1,
+                    message: decodedToken.err,
+                });
+            } else {
+                req.username = decodedToken.username;
+                req.role = decodedToken.role;
+                next();
+            }
         } else {
             res.status(403).send({
                 status: 1,
