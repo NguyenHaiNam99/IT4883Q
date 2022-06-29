@@ -7,12 +7,12 @@ const login = async (req, res) => {
         return res.status(200).send({
             status: 0,
             acessToken: result,
-        })
+        });
     }
     return res.status(400).send({
         status: 1,
         message: "Đăng nhập thất bại!",
-    })
+    });
 };
 
 const getMe = async (req, res) => {
@@ -21,7 +21,7 @@ const getMe = async (req, res) => {
     return res.status(200).send({
         status: 0,
         data
-    })
+    });
 }
 
 module.exports = {

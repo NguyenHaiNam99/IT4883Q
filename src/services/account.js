@@ -2,7 +2,7 @@ const db = require('../utilities/db');
 const security = require('../utilities/security')
 
 const create = async ({ username, email, password, name, position, role, avatar }) => {
-    const checkUserSql = `select count(username) as size from Account where username = ?`;
+    const checkUserSql = `select count(usernacme) as size from Account where username = ?`;
     const checkExists = await db.queryOne(checkUserSql, [username]);
     
     if (checkExists[0].size > 0) {

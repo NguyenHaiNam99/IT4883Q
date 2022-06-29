@@ -16,7 +16,7 @@ pool.getConnection(err => {
 });
 
 const logQuery = (sql, params) => {
-    console.log('sql: ', '\x1b[32m',
+    console.log('\x1b[32m', 'sql: ',
         mysql.format(sql, params)
             .replace(/\r?\n|\r/g, ' ')
             .split(' ').filter(e => e !== '').join(' '));

@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const PORT = 3001;
+const { PORT } = require('./config'); 
 
 app.use(bodyParser.json());
 const account = require('./routers/account');

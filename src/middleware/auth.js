@@ -17,7 +17,7 @@ const reqLogin = (req, res, next) => {
                 next();
             }
         } else {
-            res.status(403).send({
+            res.status(400).send({
                 status: 1,
                 message: 'Không có token',
             })
